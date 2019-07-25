@@ -9,7 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    count = 9
+    
+   
+    @IBOutlet weak var cv: UICollectionView!
+    var count = 9
     @IBOutlet weak var image: UIImageView!
     var imageArry = [UIImage(named: "cartoon_one"),
                      UIImage(named: "cartoon_two"),
@@ -27,24 +30,31 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Do any additional setup after loading the view.
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageArry.count
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! mycellCollectionViewCell
-        cell.myimageView.image = imageArry[indexPath.row]
+   
+        let cell = cv.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! mycellCollectionViewCell
+        cell.myimageView.image = imageArry[indexPath.row % imageArry.count]
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! mycellCollectionViewCell
-        cell.myimageView.image = imageArry[indexPath.row]
-        image.image = cell.myimageView.image
-        if indexPath.row == 9{
-            var set = 0
-            indexPath.row = set
+        image.image = imageArry[indexPath.row % imageArry.count]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(indexPath.item)
+        if indexPath.row == count - 1{
+            let insertIndexPath = IndexPath(item: count, section: 0)
+            count += 1
+            cv.insertItems(at: [insertIndexPath])
+            cv.reloadData()
+            
         }
+        
         
     }
 
