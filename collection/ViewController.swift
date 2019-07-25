@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-   
+   //I am getting collection view
     @IBOutlet weak var cv: UICollectionView!
     var count = 9
     @IBOutlet weak var image: UIImageView!
@@ -32,7 +32,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return count
     }
-    //value
+    //each cell is taken and updated
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
    
         let cell = cv.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! mycellCollectionViewCell
@@ -40,11 +40,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         return cell
     }
-    
+    //Here we make the iages bigger when the user taps on the image
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         image.image = imageArry[indexPath.row % imageArry.count]
     }
-    
+    //The loop goes to the extent to which the user scrolls it
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         print(indexPath.item)
         if indexPath.row == count - 1{
